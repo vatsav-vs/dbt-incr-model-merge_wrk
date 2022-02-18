@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: sales
+    database: vatsav_db
+    schema: sales_schema
+    tables:
+      - name: sales_agent_incr
