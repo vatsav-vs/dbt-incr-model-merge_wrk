@@ -1,3 +1,5 @@
+{% set load_time = current_timestamp() %}
+
 {{
     config(
         materialized='incremental',
@@ -7,7 +9,7 @@
     )
 }}
 
-{% set load_time = current_timestamp() %}
+
 
 {% if is_incremental() %}
 with dlt_cols as (

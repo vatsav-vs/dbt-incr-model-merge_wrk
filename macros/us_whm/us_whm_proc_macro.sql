@@ -7,13 +7,20 @@
     update {{this}} tgt
     set
     LOAD_TYPE= 'D',
-    run_type='DELTA'
+    run_type='DELTA',
+    LOADDATETIME=del.ldt
     from
     (
-    select SALES_AGENT_ID from {{this}}
-    minus
-    select SALES_AGENT_ID from {{ ref('trnsfrm') }}
+    select del_A.*,del_b.* from
+    (
+        select SALES_AGENT_ID from {{this}}
+        where LOAD_TYPE !='D'
+        minus
+        select SALES_AGENT_ID from {{ ref('trnsfrm') }}
+    )del_A,
+    (select max(LOADDATETIME) as ldt from {{this}})del_b
     )del
+    
     where del.SALES_AGENT_ID=tgt.SALES_AGENT_ID;
 {% endset %}
 {% do run_query(del_updts) %}
