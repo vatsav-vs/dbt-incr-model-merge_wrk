@@ -32,17 +32,18 @@
 
 {% set insert_stats %}
     insert into vatsav_db.hist_schema.stats_cmplx_proc
-    {% if is_incremental() %}
+    select
+    {{load_time}} as LOAD_DT,
+    ins.*,upd.*,del.* from
+    (select
+    count(*) as insrt_cnt
+    from
+    {{this}}
+    where LOAD_TYPE= 'I'
+	{% if is_incremental() %}
     --insert logic for incremental run
-    select
-    {{load_time}} as LOAD_DT,
-    ins.*,upd.*,del.* from
-    (select
-    count(*) as insrt_cnt
-    from
-    {{this}}
-    where LOAD_TYPE= 'I'
 	and LOADDATETIME >= (select max(LOAD_DT)as ts from vatsav_db.hist_schema.stats_cmplx_proc)
+	{% endif %}	
     )ins,
     (
     select
@@ -50,7 +51,10 @@
     from
     {{this}}
     where LOAD_TYPE= 'U'
+	{% if is_incremental() %}
+    --insert logic for incremental run
 	and LOADDATETIME >= (select max(LOAD_DT)as ts from vatsav_db.hist_schema.stats_cmplx_proc)
+	{% endif %}
     )upd,
     (
     select
@@ -58,35 +62,12 @@
     from
     {{this}}
     where LOAD_TYPE= 'D'
+	{% if is_incremental() %}
+    --insert logic for incremental run
 	and LOADDATETIME >= (select max(LOAD_DT)as ts from vatsav_db.hist_schema.stats_cmplx_proc)
+	{% endif %}
     )del;
-
-    {% else %}
-    --insert logic for first run
-    select
-    {{load_time}} as LOAD_DT,
-    ins.*,upd.*,del.* from
-    (select
-    count(*) as insrt_cnt
-    from
-    {{this}}
-    where LOAD_TYPE= 'I'
-    )ins,
-    (
-    select
-    count(*)as upt_cnt
-    from
-    {{this}}
-    where LOAD_TYPE= 'U'
-    )upd,
-    (
-    select
-    count(*)as del_cnt 
-    from
-    {{this}}
-    where LOAD_TYPE= 'D'
-    )del;
-    {% endif %}
+    
 
 {% endset %}
 {% do run_query(insert_stats) %}
