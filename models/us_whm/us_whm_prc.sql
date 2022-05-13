@@ -2,7 +2,8 @@
     config(
         materialized='incremental',
         transient= false,
-        unique_key='sales_agent_id'
+        unique_key='sales_agent_id',
+        post_hook = "{{uswhm_mcr()}}"
     )
 }}
 
