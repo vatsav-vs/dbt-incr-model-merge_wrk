@@ -6,4 +6,5 @@ sources:
     schema: sales_schema
     tables:
       - name: sales_agent_incr
-      - name: monthly_sales
+      - name: sales_agent_str
+      - name: sales_agent_updt_str

@@ -1,0 +1,11 @@
+ID,DESCRIPTION,PRICE,DATE_COL,TIME_COL,TIMESTAMP_COL,BOOLEAN_COL
+1,Ich muss Deutsch üben.,12.35,6/30/1995,10:20:00,Sat May 11 2019 15:30:00 GMT+0200 (CEST),1
+2,Büro ist in der Nähe von Mühle,-16.05,10/20/1995,12:40:00,Tue Jun 30 2015 15:30:00 GMT+0200 (CEST),0
+3,SAP HANA is designed to replicate and ingest structured data from SAP and non-SAP relational databases  applications and other systems quickly.,-2030.705,12/14/2019,7:56:00,Sat Apr 29 2017 16:30:00 GMT+0200 (CEST),0
+4,"""Special characters we use are !@#$%^&*(:""""""""?><[]{}~`""""""",364001,4/7/1994,10:20:00,Thu Oct 11 2018 17:30:00 GMT+0200 (CEST),1
+5,Welcome to Siemens BT-DM Team,-200000,12/5/1990,8:50:00,Sun May 11 2014 15:50:00 GMT+0200 (CEST),0
+6,"""sndkfhsdf08dshdsj22./""""""",67376.567,5/16/1992,10:20:30,Sat May 11 2019 16:30:00 GMT+0200 (CEST),1
+7,jack_jill6^~`*$#&sdhfsj,76.65,9/17/1995,10:20:30,Sun Jul 07 2019 09:30:00 GMT+0200 (CEST),0
+8,fkgajhjfklhakwj,7665.54905,6/7/2014,12:20:30,Wed Jul 17 2019 10:30:00 GMT+0200 (CEST),1
+9,london has fallen_new_%788),89.21,6/7/2019,15:20:30,Fri May 12 2017 15:30:00 GMT+0200 (CEST),0
+10,No prints_tenpoint)(*4572,278,6/7/2017,12:20:30,Mon Jun 11 2018 14:30:00 GMT+0200 (CEST),1

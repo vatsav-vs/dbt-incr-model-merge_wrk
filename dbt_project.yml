@@ -40,3 +40,8 @@ models:
     # Applies to all files under models/example/
     example:
       materialized: view
+
+seeds:
+  my_new_project:
+    custom:
+      schema: custom
