@@ -18,7 +18,7 @@ with dlt_cols as (
     'U' as load_type
     from
     {{this}} tgt
-    inner join {{ ref('trnsfrm') }} src
+    inner join {{ ref('trn_whm_pc101') }} src
     on src.SALES_AGENT_ID = tgt.SALES_AGENT_ID
     where src.zz_date >= (select max(loaddatetime) from {{ this }})
 )
@@ -42,7 +42,7 @@ select
     'FULL' as run_type
 {% endif %}
     from
-{{ ref('trnsfrm') }} vw
+{{ ref('trn_whm_pc101') }} vw
 {% if is_incremental() %}
     left join dlt_cols dlt
     on dlt.SALES_AGENT_ID=vw.SALES_AGENT_ID

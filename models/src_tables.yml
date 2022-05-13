@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: sales
-    database: vatsav_db
+    database: "{{ env_var('DBT_DB_NAME') }}"
     schema: sales_schema
     tables:
       - name: sales_agent_incr

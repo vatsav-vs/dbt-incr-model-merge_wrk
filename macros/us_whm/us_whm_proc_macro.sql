@@ -16,7 +16,7 @@
         select SALES_AGENT_ID from {{this}}
         where LOAD_TYPE !='D'
         minus
-        select SALES_AGENT_ID from {{ ref('trnsfrm') }}
+        select SALES_AGENT_ID from {{ ref('trn_whm_pc101') }}
     )del_A,
     (select max(LOADDATETIME) as ldt from {{this}})del_b
     )del
@@ -27,7 +27,7 @@
 {% do log("updated deleted records in target table", info=True) %}
 
 {% set stats_tbl %}
-    create table if not exists vatsav_db.hist_schema.stats_cmplx_proc (
+    create table if not exists  {{ env_var('DBT_DB_NAME') }}.hist_schema.uswhm_exec_time_log_pc101 (
 	LOAD_DT TIMESTAMP_TZ(9),
 	insertcount NUMBER(32,0),
 	updatecount NUMBER(32,0),
@@ -38,7 +38,7 @@
 {% do log("table created if not exists", info=True) %}
 
 {% set insert_stats %}
-    insert into vatsav_db.hist_schema.stats_cmplx_proc
+    insert into  {{ env_var('DBT_DB_NAME') }}.hist_schema.uswhm_exec_time_log_pc101
     select
     {{load_time}} as LOAD_DT,
     ins.*,upd.*,del.* from
@@ -49,7 +49,7 @@
     where LOAD_TYPE= 'I'
 	{% if is_incremental() %}
     --insert logic for incremental run
-	and LOADDATETIME >= (select max(LOAD_DT)as ts from vatsav_db.hist_schema.stats_cmplx_proc)
+	and LOADDATETIME >= (select max(LOAD_DT)as ts from  {{ env_var('DBT_DB_NAME') }}.hist_schema.uswhm_exec_time_log_pc101)
 	{% endif %}	
     )ins,
     (
@@ -60,7 +60,7 @@
     where LOAD_TYPE= 'U'
 	{% if is_incremental() %}
     --insert logic for incremental run
-	and LOADDATETIME >= (select max(LOAD_DT)as ts from vatsav_db.hist_schema.stats_cmplx_proc)
+	and LOADDATETIME >= (select max(LOAD_DT)as ts from  {{ env_var('DBT_DB_NAME') }}.hist_schema.uswhm_exec_time_log_pc101)
 	{% endif %}
     )upd,
     (
@@ -71,7 +71,7 @@
     where LOAD_TYPE= 'D'
 	{% if is_incremental() %}
     --insert logic for incremental run
-	and LOADDATETIME >= (select max(LOAD_DT)as ts from vatsav_db.hist_schema.stats_cmplx_proc)
+	and LOADDATETIME >= (select max(LOAD_DT)as ts from  {{ env_var('DBT_DB_NAME') }}.hist_schema.uswhm_exec_time_log_pc101)
 	{% endif %}
     )del;
     
